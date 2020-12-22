@@ -1,12 +1,16 @@
 import React from 'react';
 import './App.css';
-import Table from '../Table/Table';
+import Header from '../Header/Header';
+import Main from '../Main/Main';
+import Footer from '../Footer/Footer';
 
 function App() {
   return (
-      <Table />
-    // <div div className="App">
-    // </div>
+    <div div className="App">
+      <Header />
+      <Main />
+      <Footer />
+    </div>
   );
 }
 

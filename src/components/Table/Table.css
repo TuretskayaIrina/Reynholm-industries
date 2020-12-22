@@ -1,7 +1,8 @@
 .table {
+  font-family: "Roboto", "Arial", sans-serif;
   display: grid;
   border-collapse: collapse;
-  min-width: 100%;
+  width: 100%;
   grid-template-columns:
     minmax(150px, 1fr)
     minmax(150px, 1.67fr)
@@ -26,15 +27,11 @@
   border: 1px solid #f2f2f2;
   position: sticky;
   top: 0;
-  background: #6c7ae0;
+  background: #008ad3;
   text-align: left;
   font-weight: normal;
   font-size: 1.1rem;
   color: white;
-}
-
-.table__head-item:last-child {
-  border: 0;
 }
 
 .table__body {

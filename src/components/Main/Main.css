@@ -1,0 +1,23 @@
+.main {
+  font-family: "Roboto", "Arial", sans-serif;
+}
+
+.button__container {
+  margin: 30px 30px;
+}
+
+.button__item {
+  background: #008ad3;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 0.3vw rgba(0,0,0,0.5);
+  margin-right: 20px;
+}
+
+.button__item:hover {
+  cursor: pointer;
+  background: #1A398B;
+  transition: .5s;
+}
