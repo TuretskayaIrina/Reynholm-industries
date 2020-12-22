@@ -3,25 +3,14 @@ import React from 'react';
 import Table from '../Table/Table';
 
 
-function Main() {
-  function handlerClickAdd() {
-    console.log('add');
-  }
-
-  function handlerClickDelete() {
-    console.log('delete');
-  }
-
-  function handlerClickEdit() {
-    console.log('edit');
-  }
+function Main({ handlerAdd, handlerEdit, handlerDelete }) {
 
   return(
     <section className="main">
       <div className="button__container">
-        <button className="button__item" type="button" onClick={handlerClickAdd}>Добавить</button>
-        <button className="button__item" type="button" onClick={handlerClickEdit}>Редактировать</button>
-        <button className="button__item" type="button" onClick={handlerClickDelete}>Удалить</button>
+        <button className="button__item" type="button" onClick={handlerAdd}>Добавить</button>
+        <button className="button__item" type="button" onClick={handlerEdit}>Редактировать</button>
+        <button className="button__item" type="button" onClick={handlerDelete}>Удалить</button>
       </div>
       <Table />
     </section>
