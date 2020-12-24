@@ -10,7 +10,31 @@ function PopupEdite({ isOpen, onClose, handleEdit }) {
     e.preventDefault();
     handleEdit();
     console.log('delete');
-}
+  }
+
+  // обработчик выбора файла
+  function handleSelect() {
+    let inputs = document.querySelectorAll('.popup__select-img');
+    Array.prototype.forEach.call(inputs, function(input) {
+      let label = input.nextElementSibling,
+      labelVal = label.querySelector('.popup__select-img-label-text').innerText;
+
+      input.addEventListener('change', function (e) {
+        let countFiles = '';
+          if (this.files && this.files.length >= 1) {
+            countFiles = this.files.length;
+          }
+
+          if (countFiles){
+            label.querySelector('.popup__select-img-label-text').innerText = 'Выбрано файлов: ' + countFiles;
+          } else {
+            label.querySelector('.popup__select-img-label-text').innerText = labelVal;
+          }
+      });
+    })
+  };
+
+  handleSelect();
 
   return(
     <PopupWithForm
@@ -23,11 +47,16 @@ function PopupEdite({ isOpen, onClose, handleEdit }) {
       <>
         <div className="popup__form-children">
           <div className="popup__img-container">
-            <img className="popup__img" src={avatar} alt="avatar"></img>
+            <img className="popup__img" src={avatar || this.state.imgSrc} alt="avatar"></img>
             <div className="popup__select-container">
-              <input id="file" className="popup__select-img" type="file" name="photo" accept="image/*,image/jpeg"></input>
-              <label for="file" className="popup__select-img-label">
-                <span class="popup__select-img-label-text">Выберите фото</span>
+              <input
+                id="file"
+                className="popup__select-img"
+                type="file" name="photo"
+                accept="image/*,image/jpeg"
+              />
+              <label htmlFor="file" className="popup__select-img-label">
+                <span className="popup__select-img-label-text">Выберите фото</span>
               </label>
             </div>
           </div>
