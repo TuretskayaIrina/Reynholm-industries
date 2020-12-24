@@ -3,18 +3,35 @@ import './Table.css';
 import item from '../../data/data';
 
 function Table() {
+
+  function sortName() {
+    console.log('sortName');
+    item.sort(function (a, b) {
+      if (a.firstName > b.firstName) {
+        return 1;
+      }
+      if (a.firstName < b.firstName) {
+        return -1;
+      }
+      // a должно быть равным b
+      return 0;
+    });
+    console.log(item);
+    // console.log(item.reverse());
+  }
+
   return (
     <table className="table">
       <thead className="table__head">
         <tr>
           <th className="table__head-item">Превью</th>
-          <th className="table__head-item">Имя</th>
-          <th className="table__head-item">Фамилия</th>
-          <th className="table__head-item">Дата рождения</th>
-          <th className="table__head-item">Возвраст</th>
-          <th className="table__head-item">Должность</th>
-          <th className="table__head-item">Удаленка</th>
-          <th className="table__head-item">Адрес проживания</th>
+          <th className="table__head-item table__head-item-sort" onClick={sortName}>Имя</th>
+          <th className="table__head-item table__head-item-sort">Фамилия</th>
+          <th className="table__head-item table__head-item-sort">Дата рождения</th>
+          <th className="table__head-item table__head-item-sort">Возвраст</th>
+          <th className="table__head-item table__head-item-sort">Должность</th>
+          <th className="table__head-item table__head-item-sort">Удаленка</th>
+          <th className="table__head-item table__head-item-sort">Адрес проживания</th>
         </tr>
       </thead>
 

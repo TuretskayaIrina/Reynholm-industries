@@ -32,6 +32,11 @@
   font-weight: normal;
   font-size: 1.1rem;
   color: white;
+  cursor: default;
+}
+
+.table__head-item-sort {
+  cursor: pointer;
 }
 
 .table__body {
