@@ -1,12 +1,12 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 
-function PopupDelete({ isOpen, onClose, handleDelite }) {
+function PopupDelete({ isOpen, onClose, handleDelete }) {
 
   // обработчик отправки удаления карточки
   function handleSubmit(e) {
     e.preventDefault();
-    handleDelite();
+    handleDelete();
     console.log('delete');
 }
 

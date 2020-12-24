@@ -3,14 +3,14 @@ import React from 'react';
 import Table from '../Table/Table';
 
 
-function Main({ handlerAdd, handlerEdit, handlerDelete }) {
+function Main({ handleOpenPopupAdd, handleOpenPopupEdit, handleOpenPopupDelete }) {
 
   return(
     <section className="main">
       <div className="button__container">
-        <button className="button__item" type="button" onClick={handlerAdd}>Добавить</button>
-        <button className="button__item" type="button" onClick={handlerEdit}>Редактировать</button>
-        <button className="button__item" type="button" onClick={handlerDelete}>Удалить</button>
+        <button className="button__item" type="button" onClick={handleOpenPopupAdd}>Добавить</button>
+        <button className="button__item" type="button" onClick={handleOpenPopupEdit}>Редактировать</button>
+        <button className="button__item" type="button" onClick={handleOpenPopupDelete}>Удалить</button>
       </div>
       <Table />
     </section>
