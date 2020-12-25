@@ -4,34 +4,54 @@ import item from '../../data/data';
 
 function Table() {
 
-  function sortName() {
-    console.log('sortName');
-    item.sort(function (a, b) {
-      if (a.firstName > b.firstName) {
-        return 1;
+  // переменная состояния в которую буду передавать ключ для сортировки
+  // в эту же переменную сохнаняется направление сортировки
+  // так смогу использовать одну функцию для всех столбцов таблицы
+  const [sortConfig, setSortConfig] = React.useState('');
+  const [arrow, setArrow] = React.useState(false);
+
+  const sorted = item.slice();
+  console.log(sorted)
+
+  let sortedItems = item;
+  if (sortConfig !== null){
+    sortedItems.sort((a, b) => {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === 'asc' ? -1 : 1;
       }
-      if (a.firstName < b.firstName) {
-        return -1;
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === 'asc' ? 1 : -1;
       }
-      // a должно быть равным b
       return 0;
     });
-    console.log(item);
-    // console.log(item.reverse());
   }
 
+  const requestSort = key => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+      setArrow(false);
+    } else {
+      direction = 'asc';
+      setArrow(true);
+    }
+    setSortConfig({ key, direction });
+  }
+
+  // table__head-item-sort_active
+  const tableHeadItem = `${arrow ? 'table__head-item table__head-item-sort table__head-item-sort_active' : 'table__head-item table__head-item-sort'}`;
   return (
     <table className="table">
       <thead className="table__head">
         <tr>
           <th className="table__head-item">Превью</th>
-          <th className="table__head-item table__head-item-sort" onClick={sortName}>Имя</th>
-          <th className="table__head-item table__head-item-sort">Фамилия</th>
+          <th className={tableHeadItem} onClick={() => requestSort('firstName')}>Имя</th>
+          <th className={tableHeadItem} onClick={() => requestSort('lastName')}>Фамилия</th>
           <th className="table__head-item table__head-item-sort">Дата рождения</th>
           <th className="table__head-item table__head-item-sort">Возвраст</th>
-          <th className="table__head-item table__head-item-sort">Должность</th>
+          <th className={tableHeadItem} onClick={() => requestSort('profession')}>Должность</th>
           <th className="table__head-item table__head-item-sort">Удаленка</th>
-          <th className="table__head-item table__head-item-sort">Адрес проживания</th>
+          <th className={tableHeadItem} onClick={() => requestSort('adress')}>Адрес проживания</th>
         </tr>
       </thead>
 
