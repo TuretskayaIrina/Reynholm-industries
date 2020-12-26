@@ -8,6 +8,7 @@ function Table() {
   // в эту же переменную сохнаняется направление сортировки
   // так смогу использовать одну функцию для всех столбцов таблицы
   const [sortConfig, setSortConfig] = React.useState('');
+
   const [arrow, setArrow] = React.useState(false);
 
   const sorted = item.slice();
@@ -38,8 +39,9 @@ function Table() {
     setSortConfig({ key, direction });
   }
 
-  // table__head-item-sort_active
+  // меняем направление стрелки в зависимости от сортировки
   const tableHeadItem = `${arrow ? 'table__head-item table__head-item-sort table__head-item-sort_active' : 'table__head-item table__head-item-sort'}`;
+
   return (
     <table className="table">
       <thead className="table__head">
@@ -47,10 +49,10 @@ function Table() {
           <th className="table__head-item">Превью</th>
           <th className={tableHeadItem} onClick={() => requestSort('firstName')}>Имя</th>
           <th className={tableHeadItem} onClick={() => requestSort('lastName')}>Фамилия</th>
-          <th className="table__head-item table__head-item-sort">Дата рождения</th>
-          <th className="table__head-item table__head-item-sort">Возвраст</th>
+          <th className="table__head-item">Дата рождения</th>
+          <th className="table__head-item">Возвраст</th>
           <th className={tableHeadItem} onClick={() => requestSort('profession')}>Должность</th>
-          <th className="table__head-item table__head-item-sort">Удаленка</th>
+          <th className="table__head-item">Удаленка</th>
           <th className={tableHeadItem} onClick={() => requestSort('adress')}>Адрес проживания</th>
         </tr>
       </thead>

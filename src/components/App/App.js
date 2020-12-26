@@ -67,7 +67,7 @@ function App() {
   }
 
   return (
-    <div div className="App">
+    <div className="App">
       <Header />
       <Main
         handleOpenPopupAdd={handleOpenPopupAdd}
