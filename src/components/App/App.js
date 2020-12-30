@@ -5,10 +5,25 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import PopupDelete from '../PopupDelete/PopupDelete';
 import PopupEdite from '../PopupEdit/PopupEdit';
+import * as api from '../../utuls/api';
 
 function App() {
   const [ isPopupDeliteOpen, setPopupDeliteOpen ] = React.useState(false);
   const [ isPopupEditOpen, setPopupEditOpen ] = React.useState(false);
+  const [ users, setUsers ] = React.useState([]);
+
+  // получить список сотрудников при монтировании app
+  React.useEffect(() => {
+    api.getAllUsers()
+      .then((res) => {
+        console.log(res);
+        setUsers(res)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleOpenPopupAdd() {
     setPopupEditOpen(true)
@@ -73,6 +88,7 @@ function App() {
         handleOpenPopupAdd={handleOpenPopupAdd}
         handleOpenPopupEdit={handleOpenPopupEdit}
         handleOpenPopupDelete={handleOpenPopupDelete}
+        users={users}
       />
       <Footer />
       <PopupDelete

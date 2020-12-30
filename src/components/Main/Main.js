@@ -3,7 +3,7 @@ import React from 'react';
 import Table from '../Table/Table';
 
 
-function Main({ handleOpenPopupAdd, handleOpenPopupEdit, handleOpenPopupDelete }) {
+function Main({ handleOpenPopupAdd, handleOpenPopupEdit, handleOpenPopupDelete, users }) {
 
   return(
     <section className="main">
@@ -12,7 +12,7 @@ function Main({ handleOpenPopupAdd, handleOpenPopupEdit, handleOpenPopupDelete }
         <button className="button__item" type="button" onClick={handleOpenPopupEdit}>Редактировать</button>
         <button className="button__item" type="button" onClick={handleOpenPopupDelete}>Удалить</button>
       </div>
-      <Table />
+      <Table users={users}/>
     </section>
   );
 }

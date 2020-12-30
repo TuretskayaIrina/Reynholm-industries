@@ -1,20 +1,20 @@
 import React from 'react';
 import './Table.css';
-import item from '../../data/data';
+// import item from '../../data/data';
 
-function Table() {
+function Table({ users }) {
 
-  // переменная состояния в которую буду передавать ключ для сортировки
+  // переменная состояния в которую буду передавать ключ для сортировки по алфавиту
   // в эту же переменную сохнаняется направление сортировки
   // так смогу использовать одну функцию для всех столбцов таблицы
   const [sortConfig, setSortConfig] = React.useState('');
 
   const [arrow, setArrow] = React.useState(false);
 
-  const sorted = item.slice();
-  console.log(sorted)
+  // const sorted = users.slice();
+  // console.log(sorted)
 
-  let sortedItems = item;
+  let sortedItems = users;
   if (sortConfig !== null){
     sortedItems.sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) {
@@ -39,6 +39,33 @@ function Table() {
     setSortConfig({ key, direction });
   }
 
+  // приводим дату рождения в нужный формат
+  function handlebirthday(date) {
+    const birthday = new Date(date);
+    let dd = (birthday.getDate() < 10 ? '0' : '') + birthday.getDate();
+    let MM = ((birthday.getMonth() + 1) < 10 ? '0' : '') + (birthday.getMonth() + 1);
+    let yyyy = birthday.getFullYear();
+    const formatDate = `${dd}.${MM}.${yyyy} г.`;
+
+    return formatDate;
+  }
+
+  // расчет возвраста
+  function handleAge(date) {
+    const birthday = new Date(date);
+    let today = new Date();
+    const yearBirthday = `${birthday.getFullYear()}`;
+    const yearToday = `${today.getFullYear()}`;
+    const age = yearToday - yearBirthday;
+
+    return `${age} лет`;
+  }
+
+  // выбор юзера для удаления/редактирования
+  function selectUser() {
+    console.log('select');
+  }
+
   // меняем направление стрелки в зависимости от сортировки
   const tableHeadItem = `${arrow ? 'table__head-item table__head-item-sort table__head-item-sort_active' : 'table__head-item table__head-item-sort'}`;
 
@@ -58,20 +85,20 @@ function Table() {
       </thead>
 
       {<tbody className="table__body">
-        {item.map(item => (
-          <tr className="item" key={item.firstName}>
+        {users.map((user) => (
+          <tr className="item" key={user._id} onClick={selectUser}>
             <td className="item__cell">
-              <img className="item__img" src={item.photo} alt={item.firstName} />
+              <img className="item__img" src={user.photo} alt={user.firstName} />
             </td>
-            <td className="item__cell">{item.firstName}</td>
-            <td className="item__cell">{item.lastName}</td>
-            <td className="item__cell">{item.birthday}</td>
-            <td className="item__cell">{item.age}</td>
-            <td className="item__cell">{item.profession}</td>
+            <td className="item__cell">{user.firstName}</td>
+            <td className="item__cell">{user.lastName}</td>
+            <td className="item__cell">{handlebirthday(user.birthday)}</td>
+            <td className="item__cell">{handleAge(user.birthday)}</td>
+            <td className="item__cell">{user.profession}</td>
             <td className="item__cell item__cell_checkbox">
-              <input type="checkbox" />
+              <input type="checkbox" defaultChecked={user.relocation}/>
             </td>
-            <td className="item__cell">{item.adress}</td>
+            <td className="item__cell">{user.adress}</td>
           </tr>
         ))}
       </tbody>}
