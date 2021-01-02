@@ -17,3 +17,30 @@ export const getAllUsers = () => {
     })
     .catch((err) => {return Promise.reject(err.message)});
 }
+
+// создать юзера
+export const createUser = (user) => {
+  return fetch(
+    `${api}/users`,
+    {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        // avatar,
+        // relocation: user.relocation,
+        // adress: user.adress,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        birthday: user.birthday,
+        profession: user.profession,
+      })
+    }
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => {return Promise.reject(err.message)});
+}

@@ -5,11 +5,20 @@ import avatar from '../../img/no-avatar.png';
 
 function PopupEdite({ isOpen, onClose, handleEdit }) {
 
+  const firstName = React.useRef();
+  const lastName = React.useRef();
+  const birthday = React.useRef();
+  const profession = React.useRef();
+
   // обработчик добавления/редактирования карточки
   function handleSubmit(e) {
     e.preventDefault();
-    handleEdit();
-    console.log('delete');
+    handleEdit({
+      firstName: firstName.current.value,
+      lastName: lastName.current.value,
+      birthday: birthday.current.value,
+      profession: profession.current.value,
+    });
   }
 
   // обработчик выбора файла
@@ -61,13 +70,13 @@ function PopupEdite({ isOpen, onClose, handleEdit }) {
             </div>
           </div>
           <div className="popup__inputs">
-            <input className="popup__input" type="text" placeholder="Имя"/>
+            <input ref={firstName} className="popup__input" type="text" placeholder="Имя"/>
             <input className="popup__input" type="text" placeholder="Город"/>
-            <input className="popup__input" type="text" placeholder="Фамилия"/>
+            <input ref={lastName} className="popup__input" type="text" placeholder="Фамилия"/>
             <input className="popup__input" type="text" placeholder="Улица"/>
-            <input className="popup__input" type="date" placeholder="Дата рождения"/>
+            <input ref={birthday} className="popup__input" type="date" placeholder="Дата рождения"/>
             <input className="popup__input" type="text" placeholder="Дом"/>
-            <input className="popup__input" type="text" placeholder="Должность"/>
+            <input ref={profession} className="popup__input" type="text" placeholder="Должность"/>
             <input className="popup__input" type="number" placeholder="Квартира"/>
             <div className="popup__checkbox-container">
               <input className="popup__checkbox" type="checkbox"/>

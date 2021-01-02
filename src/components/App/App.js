@@ -77,8 +77,16 @@ function App() {
   }
 
   // обработчик редактирования/добавления
-  function handleEdit() {
-    closeAllPopups()
+  function handleEdit({firstName, lastName, birthday, profession}) {
+    api.createUser({firstName, lastName, birthday, profession})
+      .then((newUser) => {
+        setUsers([newUser, ...users]);
+        console.log(newUser);
+        closeAllPopups()
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   return (
