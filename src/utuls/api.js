@@ -44,3 +44,21 @@ export const createUser = (user) => {
     })
     .catch((err) => {return Promise.reject(err.message)});
 }
+
+// удалить юзера
+export const deleteUser = (userId) => {
+  return fetch(
+    `${api}/users/${userId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => {return Promise.reject(err.message)});
+}

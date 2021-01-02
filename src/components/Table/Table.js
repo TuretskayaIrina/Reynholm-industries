@@ -2,7 +2,7 @@ import React from 'react';
 import './Table.css';
 // import item from '../../data/data';
 
-function Table({ users }) {
+function Table({ users, onUserDelete }) {
 
   // переменная состояния в которую буду передавать ключ для сортировки по алфавиту
   // в эту же переменную сохнаняется направление сортировки
@@ -61,10 +61,34 @@ function Table({ users }) {
     return `${age} лет`;
   }
 
+  const [select, setSelect] = React.useState([]);
   // выбор юзера для удаления/редактирования
-  function selectUser() {
+  function selectUser(user) {
     console.log('select');
+    setSelect([...select, user]);
+    console.log(select);
+    console.log(user);
+    onUserDelete(user);
   }
+
+  // const selectUser = (user) => {
+  //   console.log('select');
+  //   setSelect([...select, user]);
+  //   console.log(select);
+  //   console.log(user);
+  //   onUserDelete(user);
+  // }
+
+  // function selectUser(user) {
+  //   console.log('select');
+  //   setSelect([...select, user]);
+  //   if (select.length > 0) {
+  //     const myArray = select.map(i => i);
+  //     const uniqArr = [...new Set(myArray)];
+  //     console.log(uniqArr);
+  //   }
+  //   console.log(select);
+  // }
 
   // меняем направление стрелки в зависимости от сортировки
   const tableHeadItem = `${arrow ? 'table__head-item table__head-item-sort table__head-item-sort_active' : 'table__head-item table__head-item-sort'}`;
@@ -86,7 +110,7 @@ function Table({ users }) {
 
       {<tbody className="table__body">
         {users.map((user) => (
-          <tr className="item" key={user._id} onClick={selectUser}>
+          <tr className="item" key={user._id} onClick={() => selectUser(user)} >
             <td className="item__cell">
               <img className="item__img" src={user.photo} alt={user.firstName} />
             </td>

@@ -71,10 +71,7 @@ function App() {
     };
   })
 
-  // обработчик удаления
-  function handleDelete() {
-    closeAllPopups();
-  }
+
 
   // обработчик редактирования/добавления
   function handleEdit({firstName, lastName, birthday, profession}) {
@@ -89,6 +86,35 @@ function App() {
       })
   }
 
+  const [userDelete, setUserDelete] = React.useState([]);
+  // открытие попапа удаления конкретного юзера
+  function handleUserDelete(user) {
+    setUserDelete(user);
+    console.log(user);
+    // handleDelete()
+    // api.deleteUser(user._id)
+    // .then(() => {
+    //   setUsers(users.filter((c) => c._id !== user._id));
+    //   closeAllPopups();
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // })
+  }
+
+  // обработчик удаления
+  function handleDelete() {
+    // api.deleteUser(userDelete._id)
+    //   .then(() => {
+    //     setUsers(users.filter((c) => c._id !== userDelete._id));
+    //     closeAllPopups();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   })
+    console.log('delete')
+  }
+
   return (
     <div className="App">
       <Header />
@@ -97,6 +123,7 @@ function App() {
         handleOpenPopupEdit={handleOpenPopupEdit}
         handleOpenPopupDelete={handleOpenPopupDelete}
         users={users}
+        onUserDelete={handleUserDelete}
       />
       <Footer />
       <PopupDelete

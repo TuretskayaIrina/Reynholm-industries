@@ -87,3 +87,7 @@ tr {
 .item__cell_checkbox {
   justify-content: center;
 }
+
+.item-select td {
+  background: #008ad3;
+}
