@@ -1,10 +1,10 @@
 import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
-import './PopupEdit.css';
+import './PopupEditUser.css';
 import avatar from '../../img/no-avatar.png';
 import FormValidator from '../../hooks/FormValidator';
 
-function PopupEdite({ isOpen, onClose, handleEdit }) {
+function PopupEditUser({ isOpen, onClose, handleEditUser }) {
 
   // нужно будет вывести текст ошибок errors
   const {values, handleChange, isValid} = FormValidator();
@@ -29,7 +29,7 @@ function PopupEdite({ isOpen, onClose, handleEdit }) {
   // обработчик добавления/редактирования карточки
   function handleSubmit(e) {
     e.preventDefault();
-    handleEdit({
+    handleEditUser({
       firstName: firstName.current.value,
       lastName: lastName.current.value,
       birthday: birthday.current.value,
@@ -67,7 +67,7 @@ function PopupEdite({ isOpen, onClose, handleEdit }) {
     onClose={onClose}
     onSubmit={handleSubmit}
     name='popup-edit'
-    title='Добавление/Редактирование'
+    title='Редактирование cотрудника'
     children={
       <>
         <div className="popup__form-children">
@@ -75,12 +75,12 @@ function PopupEdite({ isOpen, onClose, handleEdit }) {
             <img className="popup__img" src={avatar || this.state.imgSrc} alt="avatar"></img>
             <div className="popup__select-container">
               <input
-                id="file"
+                id="editFile"
                 className="popup__select-img"
                 type="file" name="photo"
                 accept="image/*,image/jpeg"
               />
-              <label htmlFor="file" className="popup__select-img-label">
+              <label htmlFor="editFile" className="popup__select-img-label">
                 <span className="popup__select-img-label-text">Выберите фото</span>
               </label>
             </div>
@@ -155,4 +155,4 @@ function PopupEdite({ isOpen, onClose, handleEdit }) {
   )
 }
 
-export default PopupEdite;
+export default PopupEditUser;

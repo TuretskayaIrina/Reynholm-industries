@@ -4,11 +4,13 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import PopupDelete from '../PopupDelete/PopupDelete';
-import PopupEdite from '../PopupEdit/PopupEdit';
+import PopupCreateUser from '../PopupCreateUser/PopupCreateUser';
+import PopupEditUser from '../PopupEditUser/PopupEditUser';
 import * as api from '../../utuls/api';
 
 function App() {
   const [ isPopupDeliteOpen, setPopupDeliteOpen ] = React.useState(false);
+  const [ isPopupCreateOpen, setPopupCreateOpen] = React.useState(false);
   const [ isPopupEditOpen, setPopupEditOpen ] = React.useState(false);
   const [ users, setUsers ] = React.useState([]);
 
@@ -26,7 +28,7 @@ function App() {
   }, []);
 
   function handleOpenPopupAdd() {
-    setPopupEditOpen(true)
+    setPopupCreateOpen(true);
     console.log('add');
   }
 
@@ -44,6 +46,7 @@ function App() {
   function closeAllPopups() {
     setPopupDeliteOpen(false);
     setPopupEditOpen(false);
+    setPopupCreateOpen(false);
   }
 
   // закрыть на Esc
@@ -71,10 +74,8 @@ function App() {
     };
   })
 
-
-
-  // обработчик редактирования/добавления
-  function handleEdit({firstName, lastName, birthday, profession}) {
+  // обработчик добавления юзера
+  function handleCreateUser({firstName, lastName, birthday, profession}) {
     api.createUser({firstName, lastName, birthday, profession})
       .then((newUser) => {
         setUsers([newUser, ...users]);
@@ -86,21 +87,22 @@ function App() {
       })
   }
 
-  const [userDelete, setUserDelete] = React.useState([]);
-  // открытие попапа удаления конкретного юзера
-  function handleUserDelete(user) {
-    setUserDelete(user);
-    console.log(user);
-    // handleDelete()
-    // api.deleteUser(user._id)
-    // .then(() => {
-    //   setUsers(users.filter((c) => c._id !== user._id));
-    //   closeAllPopups();
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // })
+  // переменная выбора юзеров на удаление
+  const [ selectForDelete, setSelectForDelete ] = React.useState([]);
+
+  console.log(selectForDelete);
+
+  // делаем массив юзеров для удаления с уникальными значениями
+  function selectUsersForDelete() {
+    if (selectForDelete.length > 0) {
+      const myArray = selectForDelete.map(i => i);
+      const uniqArr = [...new Set(myArray)];
+      console.log(uniqArr);
+      return uniqArr;
+    }
   }
+
+  selectUsersForDelete();
 
   // обработчик удаления
   function handleDelete() {
@@ -115,6 +117,14 @@ function App() {
     console.log('delete')
   }
 
+  // переменная для редактирования юзера
+  const [ selectForEdit, setSelectForEdit ] = React.useState({});
+  console.log(selectForEdit);
+
+  function handleEditUser() {
+    console.log('handleEditUser');
+  }
+
   return (
     <div className="App">
       <Header />
@@ -123,7 +133,10 @@ function App() {
         handleOpenPopupEdit={handleOpenPopupEdit}
         handleOpenPopupDelete={handleOpenPopupDelete}
         users={users}
-        onUserDelete={handleUserDelete}
+        selectForDelete={selectForDelete}
+        setSelectForDelete={setSelectForDelete}
+        selectForEdit={selectForEdit}
+        setSelectForEdit={setSelectForEdit}
       />
       <Footer />
       <PopupDelete
@@ -131,10 +144,15 @@ function App() {
         onClose={closeAllPopups}
         handleDelete={handleDelete}
       />
-      <PopupEdite
+      <PopupCreateUser
+        isOpen={isPopupCreateOpen}
+        onClose={closeAllPopups}
+        handleCreateUser={handleCreateUser}
+      />
+      <PopupEditUser
         isOpen={isPopupEditOpen}
         onClose={closeAllPopups}
-        handleEdit={handleEdit}
+        handleEditUser={handleEditUser}
       />
     </div>
   );

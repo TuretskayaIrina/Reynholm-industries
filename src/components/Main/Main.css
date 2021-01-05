@@ -7,17 +7,25 @@
 }
 
 .button__item {
-  background: #008ad3;
   border: none;
-  color: white;
   padding: 10px 15px;
   border-radius: 5px;
   box-shadow: 0 0 0.3vw rgba(0,0,0,0.5);
   margin-right: 20px;
 }
 
-.button__item:hover {
+.button__item_active {
+  background: #008ad3;
+  color: white;
+}
+
+.button__item_active:hover {
   cursor: pointer;
   background: #1A398B;
   transition: .5s;
+}
+
+.button__item_disable {
+  background: #E6E8EB;
+  color: #B6BCBF;
 }
