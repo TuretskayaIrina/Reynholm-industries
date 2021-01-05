@@ -7,8 +7,7 @@ function PopupDelete({ isOpen, onClose, handleDelete }) {
   function handleSubmit(e) {
     e.preventDefault();
     handleDelete();
-    console.log('delete');
-}
+  }
 
   return(
     <PopupWithForm

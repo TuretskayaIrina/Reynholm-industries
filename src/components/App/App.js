@@ -18,7 +18,6 @@ function App() {
   React.useEffect(() => {
     api.getAllUsers()
       .then((res) => {
-        console.log(res);
         setUsers(res)
       })
       .catch((err) => {
@@ -47,6 +46,8 @@ function App() {
     setPopupDeliteOpen(false);
     setPopupEditOpen(false);
     setPopupCreateOpen(false);
+    setSelectForDelete([]);
+    setSelectForEdit({});
   }
 
   // закрыть на Esc
@@ -92,34 +93,31 @@ function App() {
 
   console.log(selectForDelete);
 
-  // делаем массив юзеров для удаления с уникальными значениями
-  function selectUsersForDelete() {
-    if (selectForDelete.length > 0) {
-      const myArray = selectForDelete.map(i => i);
-      const uniqArr = [...new Set(myArray)];
-      console.log(uniqArr);
-      return uniqArr;
-    }
-  }
-
-  selectUsersForDelete();
-
   // обработчик удаления
   function handleDelete() {
-    // api.deleteUser(userDelete._id)
-    //   .then(() => {
-    //     setUsers(users.filter((c) => c._id !== userDelete._id));
-    //     closeAllPopups();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
-    console.log('delete')
+    if (selectForDelete.length > 0) {
+      // делаем массив юзеров для удаления с уникальными значениями
+      const myArray = selectForDelete.map(i => i);
+      const uniqArr = [...new Set(myArray)];
+
+      uniqArr.forEach((userDelete) => {
+        api.deleteUser(userDelete._id)
+          .then(() => {
+            setUsers(users.filter((i) => i._id !== userDelete._id));
+            setSelectForDelete([]);
+            // closeAllPopups();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    }
+    closeAllPopups();
   }
 
   // переменная для редактирования юзера
   const [ selectForEdit, setSelectForEdit ] = React.useState({});
-  console.log(selectForEdit);
+  // console.log(selectForEdit);
 
   function handleEditUser() {
     console.log('handleEditUser');
