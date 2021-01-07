@@ -20,6 +20,11 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
     birthday.current.value = '';
     profession.current.value = '';
     relocation.current.checked = false;
+    city.current.value = '';
+    street.current.value = '';
+    home.current.value = '';
+    apartment.current.value = '';
+
   }, [isOpen]);
 
   const firstName = React.useRef();
@@ -27,6 +32,10 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
   const birthday = React.useRef();
   const profession = React.useRef();
   const relocation = React.useRef();
+  const city = React.useRef();
+  const street = React.useRef();
+  const home = React.useRef();
+  const apartment = React.useRef();
 
   // обработчик добавления карточки
   function handleSubmit(e) {
@@ -37,6 +46,7 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
       birthday: birthday.current.value,
       profession: profession.current.value,
       relocation: relocation.current.checked,
+      adress: `Город ${city.current.value}, ул. ${street.current.value}, дом ${home.current.value}, кв ${apartment.current.value}`,
     });
   }
 
@@ -109,6 +119,10 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               type="text"
               autoComplete="off"
               placeholder="Город"
+              onChange={handleChange}
+              ref={city}
+              name="city"
+              value={values.city}
             />
 
             <input
@@ -130,6 +144,10 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               type="text"
               autoComplete="off"
               placeholder="Улица"
+              onChange={handleChange}
+              name="street"
+              value={values.street}
+              ref={street}
             />
 
             <input
@@ -149,6 +167,10 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               type="text"
               autoComplete="off"
               placeholder="Дом"
+              onChange={handleChange}
+              name="home"
+              valeu={values.home}
+              ref={home}
             />
 
             <input
@@ -170,6 +192,10 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               type="number"
               autoComplete="off"
               placeholder="Квартира"
+              onChange={handleChange}
+              name="apartment"
+              valeu={values.apartment}
+              ref={apartment}
             />
 
             <div className="popup__checkbox-container">

@@ -76,8 +76,8 @@ function App() {
   })
 
   // обработчик добавления юзера
-  function handleCreateUser({firstName, lastName, birthday, profession, relocation}) {
-    api.createUser({firstName, lastName, birthday, profession, relocation})
+  function handleCreateUser({firstName, lastName, birthday, profession, relocation, adress}) {
+    api.createUser({firstName, lastName, birthday, profession, relocation, adress})
       .then((newUser) => {
         setUsers([newUser, ...users]);
         console.log(newUser);
