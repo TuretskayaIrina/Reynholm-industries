@@ -19,14 +19,16 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
     lastName.current.value = '';
     birthday.current.value = '';
     profession.current.value = '';
+    relocation.current.checked = false;
   }, [isOpen]);
 
   const firstName = React.useRef();
   const lastName = React.useRef();
   const birthday = React.useRef();
   const profession = React.useRef();
+  const relocation = React.useRef();
 
-  // обработчик добавления/редактирования карточки
+  // обработчик добавления карточки
   function handleSubmit(e) {
     e.preventDefault();
     handleCreateUser({
@@ -34,6 +36,7 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
       lastName: lastName.current.value,
       birthday: birthday.current.value,
       profession: profession.current.value,
+      relocation: relocation.current.checked,
     });
   }
 
@@ -86,10 +89,12 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
             </div>
           </div>
           <div className="popup__inputs">
+
             <input
               ref={firstName}
               className="popup__input"
               type="text"
+              autoComplete="off"
               placeholder="Имя"
               onChange={handleChange}
               minLength="2"
@@ -98,11 +103,19 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               name="firstName"
               value={values.firstName || ''}
             />
-            <input className="popup__input" type="text" placeholder="Город"/>
+
+            <input
+              className="popup__input"
+              type="text"
+              autoComplete="off"
+              placeholder="Город"
+            />
+
             <input
               ref={lastName}
               className="popup__input"
               type="text"
+              autoComplete="off"
               placeholder="Фамилия"
               onChange={handleChange}
               minLength="2"
@@ -111,22 +124,38 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               name="lastName"
               value={values.lastName || ''}
             />
-            <input className="popup__input" type="text" placeholder="Улица"/>
+
+            <input
+              className="popup__input"
+              type="text"
+              autoComplete="off"
+              placeholder="Улица"
+            />
+
             <input
               ref={birthday}
               className="popup__input"
               type="date"
+              autoComplete="off"
               placeholder="Дата рождения"
               onChange={handleChange}
               required
               name="birthday"
               value={values.birthday || ''}
             />
-            <input className="popup__input" type="text" placeholder="Дом"/>
+
+            <input
+              className="popup__input"
+              type="text"
+              autoComplete="off"
+              placeholder="Дом"
+            />
+
             <input
               ref={profession}
               className="popup__input"
               type="text"
+              autoComplete="off"
               placeholder="Должность"
               onChange={handleChange}
               minLength="2"
@@ -135,9 +164,22 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               name="profession"
               value={values.profession || ''}
             />
-            <input className="popup__input" type="number" placeholder="Квартира"/>
+
+            <input
+              className="popup__input"
+              type="number"
+              autoComplete="off"
+              placeholder="Квартира"
+            />
+
             <div className="popup__checkbox-container">
-              <input className="popup__checkbox" type="checkbox"/>
+              <input
+                ref={relocation}
+                className="popup__checkbox"
+                type="checkbox"
+                name="relocation"
+                checked={values.relocation}
+              />
               <label className="popup__checkbox-label">Удаленка</label>
             </div>
           </div>

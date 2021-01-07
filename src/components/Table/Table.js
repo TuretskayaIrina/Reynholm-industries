@@ -1,5 +1,6 @@
 import React from 'react';
 import './Table.css';
+import avatar from '../../img/no-avatar.png';
 // import item from '../../data/data';
 
 function Table({ users, selectForDelete, setSelectForDelete, selectForEdit, setSelectForEdit }) {
@@ -91,7 +92,7 @@ function Table({ users, selectForDelete, setSelectForDelete, selectForEdit, setS
 
           >
             <td className="item__cell">
-              <img className="item__img" src={user.photo} alt={user.firstName} />
+              <img className="item__img" src={user.photo || avatar} alt={user.firstName} />
             </td>
             <td className="item__cell">{user.firstName}</td>
             <td className="item__cell">{user.lastName}</td>

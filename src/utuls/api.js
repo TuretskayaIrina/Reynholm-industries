@@ -30,12 +30,12 @@ export const createUser = (user) => {
       },
       body: JSON.stringify({
         // avatar,
-        // relocation: user.relocation,
         // adress: user.adress,
         firstName: user.firstName,
         lastName: user.lastName,
         birthday: user.birthday,
         profession: user.profession,
+        relocation: user.relocation,
       })
     }
   )
