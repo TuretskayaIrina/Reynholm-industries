@@ -3,7 +3,7 @@ import './Table.css';
 import avatar from '../../img/no-avatar.png';
 // import item from '../../data/data';
 
-function Table({ users, selectForDelete, setSelectForDelete, selectForEdit, setSelectForEdit }) {
+function Table({ users, selectForDelete, setSelectForDelete, setCurrentUser }) {
 
   // переменная состояния в которую буду передавать ключ для сортировки по алфавиту
   // в эту же переменную сохнаняется направление сортировки
@@ -11,6 +11,8 @@ function Table({ users, selectForDelete, setSelectForDelete, selectForEdit, setS
   const [sortConfig, setSortConfig] = React.useState('');
 
   const [arrow, setArrow] = React.useState(false);
+
+  // const [selectColor, setSelectColor] = React.useState(false);
 
   // const sorted = users.slice();
   // console.log(sorted)
@@ -84,10 +86,12 @@ function Table({ users, selectForDelete, setSelectForDelete, selectForEdit, setS
         {users.map((user) => (
           <tr
             className="item"
+            // className={selectForDelete ? 'item item-select' : 'item'}
             key={user._id}
             onClick={() => {
               setSelectForDelete([...selectForDelete, user])
-              setSelectForEdit(user)
+              setCurrentUser(user)
+              // setSelectColor(true)
             }}
 
           >

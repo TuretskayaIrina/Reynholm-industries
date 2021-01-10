@@ -6,6 +6,7 @@ import Footer from '../Footer/Footer';
 import PopupDelete from '../PopupDelete/PopupDelete';
 import PopupCreateUser from '../PopupCreateUser/PopupCreateUser';
 import PopupEditUser from '../PopupEditUser/PopupEditUser';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import * as api from '../../utuls/api';
 
 function App() {
@@ -13,6 +14,8 @@ function App() {
   const [ isPopupCreateOpen, setPopupCreateOpen] = React.useState(false);
   const [ isPopupEditOpen, setPopupEditOpen ] = React.useState(false);
   const [ users, setUsers ] = React.useState([]);
+  const [ selectForDelete, setSelectForDelete ] = React.useState([]);
+  const [ currentUser, setCurrentUser ] = React.useState({});
 
   // получить список сотрудников при монтировании app
   React.useEffect(() => {
@@ -46,8 +49,7 @@ function App() {
     setPopupDeliteOpen(false);
     setPopupEditOpen(false);
     setPopupCreateOpen(false);
-    setSelectForDelete([]);
-    setSelectForEdit({});
+    setSelectForDelete([]);;
   }
 
   // закрыть на Esc
@@ -88,70 +90,67 @@ function App() {
       })
   }
 
-  // переменная выбора юзеров на удаление
-  const [ selectForDelete, setSelectForDelete ] = React.useState([]);
-
-  console.log(selectForDelete);
-
   // обработчик удаления
   function handleDelete() {
     if (selectForDelete.length > 0) {
-      // делаем массив юзеров для удаления с уникальными значениями
-      const myArray = selectForDelete.map(i => i);
-      const uniqArr = [...new Set(myArray)];
-
-      uniqArr.forEach((userDelete) => {
-        api.deleteUser(userDelete._id)
-          .then(() => {
-            setUsers(users.filter((i) => i._id !== userDelete._id));
-            setSelectForDelete([]);
-            // closeAllPopups();
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
+      // собираем массив id'шников на удаление
+      const userIds = [...new Set(selectForDelete.map(e => e._id))];
+      api.deleteUsers(userIds)
+        .then((res) => {
+          console.log(res);
+          // нужно обновить стейт для обновленного рендеринга
+          setSelectForDelete([]);
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
     closeAllPopups();
   }
 
-  // переменная для редактирования юзера
-  const [ selectForEdit, setSelectForEdit ] = React.useState({});
-  // console.log(selectForEdit);
-
-  function handleEditUser() {
-    console.log('handleEditUser');
+  // обработчик редактирования юзера
+  function handleEditUser({firstName, lastName}) {
+    api.updateUser(currentUser._id, firstName, lastName)
+      .then((res) => {
+        console.log(res)
+        // нужно обновить стейт для обновленного рендеринга
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    closeAllPopups();
   }
 
   return (
     <div className="App">
-      <Header />
-      <Main
-        handleOpenPopupAdd={handleOpenPopupAdd}
-        handleOpenPopupEdit={handleOpenPopupEdit}
-        handleOpenPopupDelete={handleOpenPopupDelete}
-        users={users}
-        selectForDelete={selectForDelete}
-        setSelectForDelete={setSelectForDelete}
-        selectForEdit={selectForEdit}
-        setSelectForEdit={setSelectForEdit}
-      />
-      <Footer />
-      <PopupDelete
-        isOpen={isPopupDeliteOpen}
-        onClose={closeAllPopups}
-        handleDelete={handleDelete}
-      />
-      <PopupCreateUser
-        isOpen={isPopupCreateOpen}
-        onClose={closeAllPopups}
-        handleCreateUser={handleCreateUser}
-      />
-      <PopupEditUser
-        isOpen={isPopupEditOpen}
-        onClose={closeAllPopups}
-        handleEditUser={handleEditUser}
-      />
+      <CurrentUserContext.Provider value={currentUser}>
+        <Header />
+        <Main
+          handleOpenPopupAdd={handleOpenPopupAdd}
+          handleOpenPopupEdit={handleOpenPopupEdit}
+          handleOpenPopupDelete={handleOpenPopupDelete}
+          users={users}
+          selectForDelete={selectForDelete}
+          setSelectForDelete={setSelectForDelete}
+          setCurrentUser={setCurrentUser}
+        />
+        <Footer />
+        <PopupDelete
+          isOpen={isPopupDeliteOpen}
+          onClose={closeAllPopups}
+          handleDelete={handleDelete}
+        />
+        <PopupCreateUser
+          isOpen={isPopupCreateOpen}
+          onClose={closeAllPopups}
+          handleCreateUser={handleCreateUser}
+        />
+        <PopupEditUser
+          isOpen={isPopupEditOpen}
+          onClose={closeAllPopups}
+          handleEditUser={handleEditUser}
+        />
+      </CurrentUserContext.Provider>
     </div>
   );
 }

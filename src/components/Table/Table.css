@@ -69,6 +69,11 @@
   object-fit: cover;
 }
 
+.item:hover td {
+  background: #c7eafc;
+  cursor: pointer;
+}
+
 tr {
   display: contents;
 }
@@ -88,6 +93,7 @@ tr {
   justify-content: center;
 }
 
-.item-select td {
-  background: #008ad3;
+.item-select {
+  background: #c7eafc;
+  color: red;
 }

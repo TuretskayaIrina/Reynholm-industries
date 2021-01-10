@@ -1,9 +1,12 @@
 import './Main.css';
 import React from 'react';
 import Table from '../Table/Table';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 
-function Main({ handleOpenPopupAdd, handleOpenPopupEdit, handleOpenPopupDelete, users, selectForDelete, setSelectForDelete, selectForEdit, setSelectForEdit }) {
+function Main({ handleOpenPopupAdd, handleOpenPopupEdit, handleOpenPopupDelete, users, selectForDelete, setSelectForDelete, setCurrentUser }) {
+
+  const currentUser = React.useContext(CurrentUserContext);
 
   return(
     <section className="main">
@@ -17,10 +20,10 @@ function Main({ handleOpenPopupAdd, handleOpenPopupEdit, handleOpenPopupDelete, 
         </button>
 
         <button
-          className={selectForEdit._id === undefined ? 'button__item button__item_disable' : 'button__item button__item_active'}
+          className={currentUser._id === undefined ? 'button__item button__item_disable' : 'button__item button__item_active'}
           type="button"
           onClick={handleOpenPopupEdit}
-          disabled={selectForEdit._id === undefined}
+          disabled={currentUser._id === undefined}
         >
           Редактировать
         </button>
@@ -38,8 +41,7 @@ function Main({ handleOpenPopupAdd, handleOpenPopupEdit, handleOpenPopupDelete, 
         users={users}
         selectForDelete={selectForDelete}
         setSelectForDelete={setSelectForDelete}
-        selectForEdit={selectForEdit}
-        setSelectForEdit={setSelectForEdit}
+        setCurrentUser={setCurrentUser}
       />
     </section>
   );

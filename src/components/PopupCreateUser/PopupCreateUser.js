@@ -9,10 +9,6 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
   // нужно будет вывести текст ошибок errors
   const {values, handleChange, isValid} = FormValidator();
 
-  // React.useEffect(() => {
-  //   resetForm();
-  // }, [ resetForm ]);
-
   // очистить поля при открытии попапа
   React.useEffect(() => {
     firstName.current.value = '';
@@ -24,7 +20,6 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
     street.current.value = '';
     home.current.value = '';
     apartment.current.value = '';
-
   }, [isOpen]);
 
   const firstName = React.useRef();

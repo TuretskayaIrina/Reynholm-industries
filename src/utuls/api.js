@@ -15,7 +15,9 @@ export const getAllUsers = () => {
     .then((res) => {
       return res.json();
     })
-    .catch((err) => {return Promise.reject(err.message)});
+    .catch((err) => {
+      return Promise.reject(err.message)
+    });
 }
 
 // создать юзера
@@ -45,20 +47,47 @@ export const createUser = (user) => {
     .catch((err) => {return Promise.reject(err.message)});
 }
 
-// удалить юзера
-export const deleteUser = (userId) => {
+// изменить юзера
+export const updateUser = (userId, firstName, lastName) => {
   return fetch(
-    `${api}/users/${userId}`,
+    `${api}/users/${userId}/update`,
     {
-      method: 'DELETE',
+      method: 'PATCH',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+      })
+    }
+  )
+      .then((res) => {
+        return res.json();
+      })
+      .catch((err) => {
+        return Promise.reject(err.message)
+      });
+}
+
+// удалить юзеров по ids
+export const deleteUsers = (userIds) => {
+  return fetch(
+    `${api}/users/deleteMany`,
+    {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({userIds})
     }
   )
     .then((res) => {
       return res.json();
     })
-    .catch((err) => {return Promise.reject(err.message)});
+    .catch((err) => {
+      return Promise.reject(err.message)
+    });
 }

@@ -3,37 +3,45 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import './PopupEditUser.css';
 import avatar from '../../img/no-avatar.png';
 import FormValidator from '../../hooks/FormValidator';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function PopupEditUser({ isOpen, onClose, handleEditUser }) {
+function PopupEditUser({ isOpen, onClose, handleEditUser, selectForEdit, setSelectForEdit }) {
+
+  const currentUser = React.useContext(CurrentUserContext);
 
   // нужно будет вывести текст ошибок errors
-  const {values, handleChange, isValid} = FormValidator();
+  const {values, handleChange} = FormValidator();
 
   // React.useEffect(() => {
   //   resetForm();
   // }, [ resetForm ]);
 
-  // очистить поля при открытии попапа
-  React.useEffect(() => {
-    firstName.current.value = '';
-    lastName.current.value = '';
-    birthday.current.value = '';
-    profession.current.value = '';
-  }, [isOpen]);
+  const [ firstName, setFirstName ] = React.useState('');
+  const [ lastName, setLastName ] = React.useState('');
 
-  const firstName = React.useRef();
-  const lastName = React.useRef();
-  const birthday = React.useRef();
-  const profession = React.useRef();
+  function handleChangeFirstName(e) {
+    setFirstName(e.target.value);
+  }
+
+  function handleChangeLastName(e) {
+    setLastName(e.target.value);
+  }
+
+  // подставляем данные при открытии попапа редактирования
+  React.useEffect(() => {
+    setFirstName(currentUser.firstName);
+    setLastName(currentUser.lastName);
+  }, [currentUser]);
+
+
+
 
   // обработчик добавления/редактирования карточки
   function handleSubmit(e) {
     e.preventDefault();
     handleEditUser({
-      firstName: firstName.current.value,
-      lastName: lastName.current.value,
-      birthday: birthday.current.value,
-      profession: profession.current.value,
+      firstName: firstName,
+      lastName: lastName,
     });
   }
 
@@ -87,47 +95,64 @@ function PopupEditUser({ isOpen, onClose, handleEditUser }) {
           </div>
           <div className="popup__inputs">
             <input
-              ref={firstName}
               className="popup__input"
               type="text"
               placeholder="Имя"
-              onChange={handleChange}
+              autoComplete="off"
+              onChange={handleChangeFirstName}
               minLength="2"
               maxLength="30"
               required
               name="firstName"
-              value={values.firstName || ''}
+              value={firstName || ''}
             />
-            <input className="popup__input" type="text" placeholder="Город"/>
+
             <input
-              ref={lastName}
+              className="popup__input"
+              type="text"
+              placeholder="Город"
+            />
+
+            <input
               className="popup__input"
               type="text"
               placeholder="Фамилия"
-              onChange={handleChange}
+              autoComplete="off"
+              onChange={handleChangeLastName}
               minLength="2"
               maxLength="30"
               required
               name="lastName"
-              value={values.lastName || ''}
+              value={lastName || ''}
             />
-            <input className="popup__input" type="text" placeholder="Улица"/>
+
             <input
-              ref={birthday}
+              className="popup__input"
+              type="text"
+              placeholder="Улица"
+            />
+
+            <input
               className="popup__input"
               type="date"
               placeholder="Дата рождения"
-              onChange={handleChange}
-              required
-              name="birthday"
-              value={values.birthday || ''}
+              // onChange={handleChange}
+              // required
+              // name="birthday"
+              // value={values.birthday || ''}
             />
-            <input className="popup__input" type="text" placeholder="Дом"/>
+
             <input
-              ref={profession}
+              className="popup__input"
+              type="text"
+              placeholder="Дом"
+            />
+
+            <input
               className="popup__input"
               type="text"
               placeholder="Должность"
+              autoComplete="off"
               onChange={handleChange}
               minLength="2"
               maxLength="30"
@@ -135,16 +160,26 @@ function PopupEditUser({ isOpen, onClose, handleEditUser }) {
               name="profession"
               value={values.profession || ''}
             />
-            <input className="popup__input" type="number" placeholder="Квартира"/>
+
+            <input
+              className="popup__input"
+              type="number"
+              placeholder="Квартира"
+            />
+
             <div className="popup__checkbox-container">
-              <input className="popup__checkbox" type="checkbox"/>
+              <input
+                className="popup__checkbox"
+                type="checkbox"
+                name="relocation"
+                checked={values.relocation}
+              />
               <label className="popup__checkbox-label">Удаленка</label>
             </div>
           </div>
         </div>
         <button
-          className={ isValid ? "popup__button-save popup__button-save_active" : "popup__button-save popup__button-save_disabled"}
-          disabled={!isValid}
+          className="popup__button-save popup__button-save_active"
           type="submit"
         >
           Сохранить
