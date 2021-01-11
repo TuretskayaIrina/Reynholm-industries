@@ -34,8 +34,6 @@ function PopupEditUser({ isOpen, onClose, handleEditUser, selectForEdit, setSele
   }, [currentUser]);
 
 
-
-
   // обработчик добавления/редактирования карточки
   function handleSubmit(e) {
     e.preventDefault();

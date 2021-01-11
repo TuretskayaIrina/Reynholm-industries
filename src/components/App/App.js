@@ -16,6 +16,7 @@ function App() {
   const [ users, setUsers ] = React.useState([]);
   const [ selectForDelete, setSelectForDelete ] = React.useState([]);
   const [ currentUser, setCurrentUser ] = React.useState({});
+  console.log(currentUser);
 
   // получить список сотрудников при монтировании app
   React.useEffect(() => {
@@ -49,7 +50,8 @@ function App() {
     setPopupDeliteOpen(false);
     setPopupEditOpen(false);
     setPopupCreateOpen(false);
-    setSelectForDelete([]);;
+    setSelectForDelete([]);
+    setCurrentUser({});
   }
 
   // закрыть на Esc
@@ -111,9 +113,11 @@ function App() {
   // обработчик редактирования юзера
   function handleEditUser({firstName, lastName}) {
     api.updateUser(currentUser._id, firstName, lastName)
-      .then((res) => {
-        console.log(res)
-        // нужно обновить стейт для обновленного рендеринга
+      .then((updatedUser) => {
+        const updatedUsers = [...users];
+        const userIndex = updatedUsers.findIndex(el => el._id === currentUser._id);
+        updatedUsers[userIndex] = updatedUser;
+        setUsers(updatedUsers);
       })
       .catch((err) => {
         console.log(err);

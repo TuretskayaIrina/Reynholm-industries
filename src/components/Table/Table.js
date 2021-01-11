@@ -2,8 +2,11 @@ import React from 'react';
 import './Table.css';
 import avatar from '../../img/no-avatar.png';
 // import item from '../../data/data';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Table({ users, selectForDelete, setSelectForDelete, setCurrentUser }) {
+
+  const currentUser = React.useContext(CurrentUserContext);
 
   // переменная состояния в которую буду передавать ключ для сортировки по алфавиту
   // в эту же переменную сохнаняется направление сортировки
