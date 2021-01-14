@@ -16,7 +16,6 @@ function App() {
   const [ users, setUsers ] = React.useState([]);
   const [ selectForDelete, setSelectForDelete ] = React.useState([]);
   const [ currentUser, setCurrentUser ] = React.useState({});
-  console.log(currentUser);
 
   // получить список сотрудников при монтировании app
   React.useEffect(() => {
@@ -32,17 +31,14 @@ function App() {
 
   function handleOpenPopupAdd() {
     setPopupCreateOpen(true);
-    console.log('add');
   }
 
   function handleOpenPopupEdit() {
     setPopupEditOpen(true);
-    console.log('edit');
   }
 
   function handleOpenPopupDelete() {
     setPopupDeliteOpen(true);
-    console.log('delete');
   }
 
   // закрытие всех модальных окон
@@ -98,9 +94,9 @@ function App() {
       // собираем массив id'шников на удаление
       const userIds = [...new Set(selectForDelete.map(e => e._id))];
       api.deleteUsers(userIds)
-        .then((res) => {
-          console.log(res);
-          // нужно обновить стейт для обновленного рендеринга
+        .then(() => {
+          const updatedUsers = [...users];
+          setUsers(updatedUsers.filter(x => !selectForDelete.some(y => x._id === y._id)));
           setSelectForDelete([]);
         })
         .catch((err) => {
