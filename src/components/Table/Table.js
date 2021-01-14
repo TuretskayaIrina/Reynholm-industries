@@ -11,8 +11,6 @@ function Table({ users, selectForDelete, setSelectForDelete, setCurrentUser }) {
 
   const [arrow, setArrow] = React.useState(false);
 
-  // const [selectColor, setSelectColor] = React.useState(false);
-
   // const sorted = users.slice();
   // console.log(sorted)
 
@@ -66,6 +64,11 @@ function Table({ users, selectForDelete, setSelectForDelete, setCurrentUser }) {
   // меняем направление стрелки в зависимости от сортировки
   const tableHeadItem = `${arrow ? 'table__head-item table__head-item-sort table__head-item-sort_active' : 'table__head-item table__head-item-sort'}`;
 
+  // проверям, есть ли юзер в массиве выбранных
+  function classSelect(arr, val) {
+    return arr.some(arrVal => val === arrVal);
+  }
+
   return (
     <table className="table">
       <thead className="table__head">
@@ -84,15 +87,18 @@ function Table({ users, selectForDelete, setSelectForDelete, setCurrentUser }) {
       {<tbody className="table__body">
         {users.map((user) => (
           <tr
-            className="item"
-            // className={selectForDelete ? 'item item-select' : 'item'}
+            className={classSelect(selectForDelete, user) ? 'item item-select' : 'item'}
             key={user._id}
             onClick={() => {
-              setSelectForDelete([...selectForDelete, user])
-              setCurrentUser(user)
-              // setSelectColor(true)
+              const selected = selectForDelete.some(el => el._id === user._id);
+              if ( !selected ) {
+                setSelectForDelete([...selectForDelete, user]);
+                setCurrentUser(user);
+              } else {
+                setSelectForDelete(selectForDelete.filter((el) => el._id !== user._id));
+                setCurrentUser({});
+              }
             }}
-
           >
             <td className="item__cell">
               <img className="item__img" src={user.photo || avatar} alt={user.firstName} />

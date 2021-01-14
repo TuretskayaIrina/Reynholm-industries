@@ -16,6 +16,8 @@ function App() {
   const [ users, setUsers ] = React.useState([]);
   const [ selectForDelete, setSelectForDelete ] = React.useState([]);
   const [ currentUser, setCurrentUser ] = React.useState({});
+  console.log(selectForDelete)
+  console.log(currentUser)
 
   // получить список сотрудников при монтировании app
   React.useEffect(() => {

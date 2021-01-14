@@ -59,10 +59,6 @@
   display: contents;
 }
 
-.item:nth-child(even) td {
-  background: #f8f6ff;
-}
-
 .item__img {
   width: 100%;
   height: 120px;
@@ -72,6 +68,7 @@
 .item:hover td {
   background: #c7eafc;
   cursor: pointer;
+  color: #808080;
 }
 
 tr {
@@ -93,7 +90,7 @@ tr {
   justify-content: center;
 }
 
-.item-select {
-  background: #c7eafc;
-  color: red;
+.item-select td {
+  background: #99d7f7;
+  color: black;
 }
