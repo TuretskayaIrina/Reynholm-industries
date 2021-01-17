@@ -2,23 +2,24 @@ import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm';
 import './PopupEditUser.css';
 import avatar from '../../img/no-avatar.png';
-import FormValidator from '../../hooks/FormValidator';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function PopupEditUser({ isOpen, onClose, handleEditUser, selectForEdit, setSelectForEdit }) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
-  // нужно будет вывести текст ошибок errors
-  const {values, handleChange} = FormValidator();
-
-  // React.useEffect(() => {
-  //   resetForm();
-  // }, [ resetForm ]);
-
   const [ firstName, setFirstName ] = React.useState('');
   const [ lastName, setLastName ] = React.useState('');
+  const [ birthday, setBirthday ] = React.useState('');
+  const [ profession, setProfession ] = React.useState('');
+  const [ relocation, setRelocation ] = React.useState(false);
+  const [ city, setCity ] = React.useState('');
+  const [ street, setStreet ] = React.useState('');
+  const [ home, setHome ] = React.useState('');
+  const [ apartment, setApartment ] = React.useState('');
 
+
+  // обработчики изменений импутов
   function handleChangeFirstName(e) {
     setFirstName(e.target.value);
   }
@@ -27,12 +28,61 @@ function PopupEditUser({ isOpen, onClose, handleEditUser, selectForEdit, setSele
     setLastName(e.target.value);
   }
 
+  function handleChangeBirthday(e) {
+    setBirthday(e.target.value);
+  }
+
+  function handleChangeProfession(e) {
+    setProfession(e.target.value);
+  }
+
+  function handleChangeRelocation(e) {
+    setRelocation(e.target.checked);
+  }
+
+  function handleChangeCity(e) {
+    setCity(e.target.value);
+  }
+
+  function handleChangeStreet(e) {
+    setStreet(e.target.value);
+  }
+
+  function handleChangeHome(e) {
+    setHome(e.target.value);
+  }
+
+  function handleChangeApartment(e) {
+    setApartment(e.target.value);
+  }
+
+  // приводим дату рождения в нужный формат
+  function handlebirthday(date) {
+    const birthday = new Date(date);
+    let dd = (birthday.getDate() < 10 ? '0' : '') + birthday.getDate();
+    let MM = ((birthday.getMonth() + 1) < 10 ? '0' : '') + (birthday.getMonth() + 1);
+    let yyyy = birthday.getFullYear();
+    const formatDate = `${yyyy}-${MM}-${dd}`;
+
+    console.log(formatDate);
+    return formatDate;
+  }
+
   // подставляем данные при открытии попапа редактирования
   React.useEffect(() => {
-    setFirstName(currentUser.firstName);
-    setLastName(currentUser.lastName);
-  }, [currentUser]);
-
+    if (isOpen) {
+      console.log(currentUser.birthday);
+      setFirstName(currentUser.firstName);
+      setLastName(currentUser.lastName);
+      setBirthday(() => handlebirthday(currentUser.birthday));
+      setProfession(currentUser.profession);
+      setRelocation(currentUser.relocation);
+      setCity(currentUser.adress.city);
+      setStreet(currentUser.adress.street);
+      setHome(currentUser.adress.home);
+      setApartment(currentUser.adress.apartment);
+    }
+  }, [currentUser, currentUser.firstName, currentUser.lastName, currentUser.profession, currentUser.relocation, isOpen]);
 
   // обработчик добавления/редактирования карточки
   function handleSubmit(e) {
@@ -109,6 +159,13 @@ function PopupEditUser({ isOpen, onClose, handleEditUser, selectForEdit, setSele
               className="popup__input"
               type="text"
               placeholder="Город"
+              autoComplete="off"
+              onChange={handleChangeCity}
+              // minLength="2"
+              // maxLength="30"
+              // required
+              name="city"
+              value={city || ''}
             />
 
             <input
@@ -128,22 +185,39 @@ function PopupEditUser({ isOpen, onClose, handleEditUser, selectForEdit, setSele
               className="popup__input"
               type="text"
               placeholder="Улица"
+              autoComplete="off"
+              onChange={handleChangeStreet}
+              // minLength="2"
+              // maxLength="30"
+              // required
+              name="street"
+              value={street || ''}
             />
 
             <input
               className="popup__input"
               type="date"
               placeholder="Дата рождения"
-              // onChange={handleChange}
+              autoComplete="off"
+              onChange={handleChangeBirthday}
+              // minLength="2"
+              // maxLength="30"
               // required
-              // name="birthday"
-              // value={values.birthday || ''}
+              name="birthday"
+              value={birthday || ''}
             />
 
             <input
               className="popup__input"
               type="text"
               placeholder="Дом"
+              autoComplete="off"
+              onChange={handleChangeHome}
+              // minLength="2"
+              // maxLength="30"
+              // required
+              name="home"
+              value={home || ''}
             />
 
             <input
@@ -151,26 +225,34 @@ function PopupEditUser({ isOpen, onClose, handleEditUser, selectForEdit, setSele
               type="text"
               placeholder="Должность"
               autoComplete="off"
-              onChange={handleChange}
-              minLength="2"
-              maxLength="30"
-              required
+              onChange={handleChangeProfession}
+              // minLength="2"
+              // maxLength="30"
+              // required
               name="profession"
-              value={values.profession || ''}
+              value={profession || ''}
             />
 
             <input
               className="popup__input"
               type="number"
               placeholder="Квартира"
+              autoComplete="off"
+              onChange={handleChangeApartment}
+              // minLength="2"
+              // maxLength="30"
+              // required
+              name="apartment"
+              value={apartment || ''}
             />
 
             <div className="popup__checkbox-container">
               <input
                 className="popup__checkbox"
                 type="checkbox"
+                onChange={handleChangeRelocation}
                 name="relocation"
-                checked={values.relocation}
+                checked={relocation || false}
               />
               <label className="popup__checkbox-label">Удаленка</label>
             </div>

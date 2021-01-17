@@ -111,7 +111,12 @@ function Table({ users, selectForDelete, setSelectForDelete, setCurrentUser }) {
             <td className="item__cell item__cell_checkbox">
               <input type="checkbox" defaultChecked={user.relocation}/>
             </td>
-            <td className="item__cell">{user.adress}</td>
+            <td className="item__cell">
+              Город {user.adress.city},
+              улица {user.adress.street},
+              дом {user.adress.home},
+              кв. {user.adress.apartment}
+            </td>
           </tr>
         ))}
       </tbody>}

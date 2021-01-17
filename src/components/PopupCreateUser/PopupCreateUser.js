@@ -41,7 +41,12 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
       birthday: birthday.current.value,
       profession: profession.current.value,
       relocation: relocation.current.checked,
-      adress: `Город ${city.current.value}, ул. ${street.current.value}, дом ${home.current.value}, кв ${apartment.current.value}`,
+      adress: {
+        city: city.current.value,
+        street: street.current.value,
+        home: home.current.value,
+        apartment: apartment.current.value,
+      },
     });
   }
 
@@ -117,7 +122,7 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               onChange={handleChange}
               ref={city}
               name="city"
-              value={values.city}
+              value={values.city || ''}
             />
 
             <input
@@ -141,7 +146,7 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               placeholder="Улица"
               onChange={handleChange}
               name="street"
-              value={values.street}
+              value={values.street || ''}
               ref={street}
             />
 
@@ -164,7 +169,7 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               placeholder="Дом"
               onChange={handleChange}
               name="home"
-              valeu={values.home}
+              valeu={values.home || ''}
               ref={home}
             />
 
@@ -189,7 +194,7 @@ function PopupCreateUser({ isOpen, onClose, handleCreateUser }) {
               placeholder="Квартира"
               onChange={handleChange}
               name="apartment"
-              valeu={values.apartment}
+              valeu={values.apartment || ''}
               ref={apartment}
             />
 
