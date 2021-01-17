@@ -64,14 +64,12 @@ function PopupEditUser({ isOpen, onClose, handleEditUser, selectForEdit, setSele
     let yyyy = birthday.getFullYear();
     const formatDate = `${yyyy}-${MM}-${dd}`;
 
-    console.log(formatDate);
     return formatDate;
   }
 
   // подставляем данные при открытии попапа редактирования
   React.useEffect(() => {
     if (isOpen) {
-      console.log(currentUser.birthday);
       setFirstName(currentUser.firstName);
       setLastName(currentUser.lastName);
       setBirthday(() => handlebirthday(currentUser.birthday));
@@ -90,6 +88,15 @@ function PopupEditUser({ isOpen, onClose, handleEditUser, selectForEdit, setSele
     handleEditUser({
       firstName: firstName,
       lastName: lastName,
+      birthday: birthday,
+      profession: profession,
+      relocation: relocation,
+      adress: {
+        city: city,
+        street: street,
+        home: home,
+        apartment: apartment,
+      },
     });
   }
 
@@ -252,7 +259,7 @@ function PopupEditUser({ isOpen, onClose, handleEditUser, selectForEdit, setSele
                 type="checkbox"
                 onChange={handleChangeRelocation}
                 name="relocation"
-                checked={relocation || false}
+                checked={relocation || ''}
               />
               <label className="popup__checkbox-label">Удаленка</label>
             </div>

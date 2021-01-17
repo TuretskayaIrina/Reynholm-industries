@@ -48,7 +48,7 @@ export const createUser = (user) => {
 }
 
 // изменить юзера
-export const updateUser = (userId, firstName, lastName) => {
+export const updateUser = (userId, firstName, lastName, birthday, profession, relocation, adress) => {
   return fetch(
     `${api}/users/${userId}/update`,
     {
@@ -60,6 +60,10 @@ export const updateUser = (userId, firstName, lastName) => {
       body: JSON.stringify({
         firstName,
         lastName,
+        birthday,
+        profession,
+        relocation,
+        adress,
       })
     }
   )

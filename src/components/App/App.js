@@ -109,8 +109,8 @@ function App() {
   }
 
   // обработчик редактирования юзера
-  function handleEditUser({firstName, lastName}) {
-    api.updateUser(currentUser._id, firstName, lastName)
+  function handleEditUser({firstName, lastName, birthday, profession, relocation, adress}) {
+    api.updateUser(currentUser._id, firstName, lastName, birthday, profession, relocation, adress)
       .then((updatedUser) => {
         const updatedUsers = [...users];
         const userIndex = updatedUsers.findIndex(el => el._id === currentUser._id);

@@ -109,7 +109,7 @@ function Table({ users, selectForDelete, setSelectForDelete, setCurrentUser }) {
             <td className="item__cell">{handleAge(user.birthday)}</td>
             <td className="item__cell">{user.profession}</td>
             <td className="item__cell item__cell_checkbox">
-              <input type="checkbox" defaultChecked={user.relocation}/>
+              <input type="checkbox" checked={user.relocation} readOnly/>
             </td>
             <td className="item__cell">
               Город {user.adress.city},
